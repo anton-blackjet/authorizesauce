@@ -59,7 +59,7 @@ class CustomerAPI(object):
             raise e
         return response
 
-    def create_saved_profile(self, internal_id, payments=None, email=None):
+    def create_saved_profile(self, internal_id, payments=None, email=None, description=None):
         """
         Creates a user profile to which you can attach saved payments.
         Requires an internal_id to uniquely identify this user. If a list of
@@ -70,6 +70,7 @@ class CustomerAPI(object):
         profile = self.client.factory.create('CustomerProfileType')
         profile.merchantCustomerId = internal_id
         profile.email = email
+        profile.description = description 
         if payments:
             payment_array = self.client.factory.create(
                 'ArrayOfCustomerPaymentProfileType')
