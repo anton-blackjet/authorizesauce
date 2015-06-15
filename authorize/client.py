@@ -96,12 +96,13 @@ class AuthorizeCreditCard(object):
     Any operation performed on this instance returns another instance you can
     work with, such as a transaction, saved card, or recurring payment.
     """
-    def __init__(self, client, credit_card, address=None, email=None):
+    def __init__(self, client, credit_card, address=None, email=None, description=None):
         self._client = client
         self.credit_card = credit_card
         self.address = address
         self.email = email
-
+        self.description = description
+        
     def __repr__(self):
         return '<AuthorizeCreditCard {0.credit_card.card_type} ' \
             '{0.credit_card.safe_number}>'.format(self)
