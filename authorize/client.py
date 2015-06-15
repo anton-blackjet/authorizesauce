@@ -46,7 +46,7 @@ class AuthorizeClient(object):
         self._recurring = RecurringAPI(login_id, transaction_key, debug, test)
         self._customer = CustomerAPI(login_id, transaction_key, debug, test)
 
-    def card(self, credit_card, address=None, email=None):
+    def card(self, credit_card, address=None, email=None, description=None):
         """
         To work with a credit card, pass in a
         :class:`CreditCard <authorize.data.CreditCard>` instance, and
@@ -57,7 +57,7 @@ class AuthorizeClient(object):
         ``email`` is only required for those using European payment processors.
         """
         return AuthorizeCreditCard(self, credit_card, address=address,
-                                   email=email)
+                                   email=email, description=description)
 
     def transaction(self, uid):
         """
@@ -147,7 +147,7 @@ class AuthorizeCreditCard(object):
         payment = self._client._customer.create_saved_payment(
             self.credit_card, address=self.address)
         profile_id, payment_ids = self._client._customer \
-            .create_saved_profile(unique_id, [payment], email=self.email)
+            .create_saved_profile(unique_id, [payment], email=self.email, description=self.description))
         uid = '{0}|{1}'.format(profile_id, payment_ids[0])
         return self._client.saved_card(uid)
 
